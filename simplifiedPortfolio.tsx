@@ -5,16 +5,16 @@
 // - Add a method or compute totalValue
 // - Add a method to filter by type
 
-type AssetType = 'Stock' | 'Bond';
+type SimplifiedAssetType = 'Stock' | 'Bond';
 
-type Asset = {
+type SimplifiedAsset = {
     symbol: string,
     type: AssetType,
     quantity: number,
     price: number
 }
 
-class Portfolio {
+class SimplifiedPortfolio {
     name: string;
     owner: string;
     assets: Asset[];
