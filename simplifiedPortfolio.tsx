@@ -9,7 +9,7 @@ type SimplifiedAssetType = 'Stock' | 'Bond';
 
 type SimplifiedAsset = {
     symbol: string,
-    type: AssetType,
+    type: SimplifiedAssetType,
     quantity: number,
     price: number
 }
@@ -17,6 +17,6 @@ type SimplifiedAsset = {
 class SimplifiedPortfolio {
     name: string;
     owner: string;
-    assets: Asset[];
+    assets: SimplifiedAsset[];
     //getTotalValue(): number {...}
 }
