@@ -59,7 +59,28 @@ class Portfolio {
   }
 
   // Get all symbols in the portfolio
-  getAssetSymbols(symbol: string): string[] {
+  getAssetSymbols(): string[] {
     return this.assets.map((asset) => asset.symbol);
   }
+
+  //   getTopThreeAssets(): Asset[] {
+
+  //   }
 }
+
+const portfolio1 = new Portfolio("Dezha's Portfolio Test", "Christian Dezha");
+
+const asset1 = new Asset("AAPL", "Stock", 10, 190);
+const asset2 = new Asset("GOOG", "Stock", 5, 2800);
+const asset3 = new Asset("US10Y", "Bond", 20, 100);
+
+portfolio1.addAsset(asset1);
+portfolio1.addAsset(asset2);
+portfolio1.addAsset(asset3);
+
+console.log("Total Value of portfolio: ", portfolio1.getTotalValue());
+console.log("All asset symbols of portfolio: ", portfolio1.getAssetSymbols());
+console.log(
+  "All assets that are stocks: ",
+  portfolio1.filterAssetsByType("Stock")
+);
