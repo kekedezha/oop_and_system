@@ -32,17 +32,17 @@
  *          updatePrices(priceFeed: Record<string, number>) - accepts an object like { "AAPL": 200, "GOOG": 2800 }
  * */
 
-type AssetTypeV2 = "Stock" | "Bond";
+type AssetType = "Stock" | "Bond";
 
 class Asset {
   symbol: string;
-  type: AssetTypeV2;
+  type: AssetType;
   quantity: number;
   price: number;
 
   constructor(
     symbol: string,
-    type: AssetTypeV2,
+    type: AssetType,
     quantity: number,
     price: number
   ) {
@@ -52,18 +52,18 @@ class Asset {
     this.price = price;
   }
 
-  // Method to return value of asset - quantity * price
+  // Method to return value of assets - quantity * price
   getValue(): number {
     return this.quantity * this.price;
   }
 
-  // Method to update price of asset
+  // Method to update the price of the asset
   updatePrice(newPrice: number): void {
     this.price = newPrice;
   }
 }
 
-class PortfolioV2 {
+class Portfolio {
   name: string;
   owner: string;
   assets: Asset[];
@@ -74,32 +74,46 @@ class PortfolioV2 {
     this.assets = [];
   }
 
-  // Method to add asset to owners portfolio
+  // Method to add new asset to portfolio
   addAsset(asset: Asset): void {
     this.assets.push(asset);
   }
 
-  // Method to get the total value of owners portfolio
+  // Method to get total value of portfolio
   getTotalValue(): number {
     return this.assets.reduce((total, asset) => total + asset.getValue(), 0);
   }
 
-  // Method to filter assets by asset type. Returns all assets that are either "Stock"s or "Bond"s
-  filterAssetsByType(type: AssetTypeV2): Asset[] {
+  // Method to filter portfolio by 'Stock's or "Bond"s
+  filterAssetsByType(type: AssetType): Asset[] {
     return this.assets.filter((asset) => asset.type === type);
   }
 
+  // Method to get top number of 'n' assets from users portfolio
   getTopAssets(n: number): Asset[] {
-    this.assets.sort((a: Asset, b: Asset) => b.getValue() - a.getValue());
-    return this.assets.slice(0, n);
+    return [...this.assets]
+      .sort((a: Asset, b: Asset) => b.getValue() - a.getValue())
+      .slice(0, n);
   }
 
+  // Method to update prices from incoming price feed
   updatePrices(priceFeed: Record<string, number>): void {
     for (const asset of this.assets) {
       const newPrice = priceFeed[asset.symbol];
-      if (newPrice != undefined) {
+      if (newPrice !== undefined) {
         asset.updatePrice(newPrice);
       }
     }
   }
 }
+
+const portfolio = new Portfolio("Growth Portfolio", "Christian");
+
+portfolio.addAsset(new Asset("AAPL", "Stock", 10, 190));
+portfolio.addAsset(new Asset("GOOG", "Stock", 5, 2700));
+portfolio.addAsset(new Asset("US10Y", "Bond", 20, 100));
+
+portfolio.updatePrices({ AAPL: 200, GOOG: 2800 }); // New market prices
+
+console.log("Total Value of porfolio: ", portfolio.getTotalValue()); // Updated value
+console.log("Top two assets by value: ", portfolio.getTopAssets(2)); // Top 2 assets by value
