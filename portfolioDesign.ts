@@ -117,3 +117,46 @@ portfolio.updatePrices({ AAPL: 200, GOOG: 2800 }); // New market prices
 
 console.log("Total Value of porfolio: ", portfolio.getTotalValue()); // Updated value
 console.log("Top two assets by value: ", portfolio.getTopAssets(2)); // Top 2 assets by value
+
+// Test Case 1: Create an Asset and get value - Verify getValue works correctly.
+const asset1 = new Asset("AAPL", "Stock", 10, 150);
+console.log(asset1.getValue()); // Expected: 1500
+
+// Test Case 2: Update Price of an Asset
+asset1.updatePrice(200);
+console.log("\n", asset1.price); // Expected: 200
+console.log(asset1.getValue() + "\n"); // Expected: 2000
+
+// Test Case 3: Add Assets to Portfolio and Get Total Value
+const portfolio1 = new Portfolio("Tech Portfolio", "Alice");
+const asset2 = new Asset("GOOG", "Stock", 5, 1000);
+portfolio1.addAsset(asset1);
+portfolio1.addAsset(asset2);
+
+console.log(portfolio1.getTotalValue() + "\n"); // Expected: 2000 (AAPL) + 5000 (GOOG) = 7000
+
+// Test Case 4: Filter Assets by Type
+const bond1 = new Asset("US10Y", "Bond", 20, 100);
+portfolio1.addAsset(bond1);
+
+const stocks = portfolio1.filterAssetsByType("Stock");
+console.log(stocks.map((a) => a.symbol)); // Expected: ["AAPL", "GOOG"]
+console.log("");
+
+// Test Case 5: Get Top N Assets
+const topAssets = portfolio1.getTopAssets(2);
+console.log(topAssets.map((a) => a.symbol)); // Expected: ["GOOG", "AAPL"]
+console.log("");
+
+// Test Case 6: Update Prices from Price Feed
+portfolio1.updatePrices({
+  AAPL: 180,
+  GOOG: 950,
+  US10Y: 110,
+});
+
+console.log(asset1.price); // Expected: 180
+console.log(asset2.price); // Expected: 950
+console.log(bond1.price); // Expected: 110
+
+console.log(portfolio.getTotalValue()); // Recalculate with updated prices
