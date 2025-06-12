@@ -44,11 +44,17 @@ class BankAccount {
   }
 
   // Method to deposit money into bank account
+  /**
+   * WILL WANT TO CHECK AMOUNT IS A POSITIVE AMOUNT
+   */
   deposit(amount: number): void {
     this.balance += amount;
   }
 
   // Method to withdraw money from bank account - cannot be more than available balance
+  /**
+   * WILL WANT TO CHECK AMOUNT IS A POSITIVE AMOUNT
+   */
   withdraw(amount: number): void {
     if (amount > this.balance) {
       console.log(
@@ -87,6 +93,9 @@ class Bank {
   }
 
   // Method to add account to person's bank
+  /**
+   * WILL PROBABLY WANT TO ADD A CHECK TO MAKE SURE ACCOUNT NUMBER IS UNIQUE
+   */
   addAccount(account: BankAccount): void {
     this.accounts.push(account);
   }
